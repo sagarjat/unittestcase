@@ -30,25 +30,56 @@ section {
   color: #fff;
   position: relative;
 }
-#page-1 .text, #page-1-clone .text {
-  background-color: #818aa1a1;
+
+.text-size {
+  font-size: 20px;
+  padding: 0 44px;
+  width: 90%;
+
 }
-#page-2 .text {
-  background-color: #645d70;
+.pre-back {
+  background: black;
+  padding: 15px;
+  border-radius: 7px;
 }
-#page-3 .text {
-  background-color: #9C27B0;
-}
-#page-4 .text {
-  background-color: #E91E63;
-}
-#page-5 .text {
-  background-color: #F44336;
-}
-#page-6 .text, #page-6-clone .text {
-  background-color: #4CAF50;
+.text-size-span {
+  font-size: 20px;
+
 }
 
+#page-1 .text, #page-1-clone .text {
+  background-color: #5d706a;
+} 
+#page-2 .text {
+  background-color: #5d6d70;
+}
+#page-3 .text-new {
+  background-color: #5d706a;
+}
+#page-4 .text {
+  background-color: #5d6d70;
+}
+#page-5 .text {
+  background-color: #5d706a;
+}
+#page-6 .text, #page-6-clone .text {
+  background-color: #5d6d70;
+}
+#page-7 .text {
+  background-color: #5d706a;
+}
+#page-8 .text {
+  background-color: #5d6d70;
+}
+#page-9 .text {
+  background-color: #5d706a;
+}
+#page-10 .text {
+  background-color: #5d6d70;
+}
+#page-11 .text {
+  background-color: #5d706a;
+}
 .scroller {
   position: absolute;
   bottom: 20px;
@@ -142,11 +173,28 @@ section {
   flex-flow: column;
   margin-top: 20px;
 }
-.about-text {
-  padding: 0 50px;
+.text-new {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  margin-top: 20px;
+}
+.font-change {
+  font-size: 20px;
+}
+.list-style li {
+  line-height: 90px;
   font-size: 30px;
 }
-
+.about-text {
+  padding: 0 50px;
+  font-size: 35px;
+}
+blockquote {
+  padding: 0;
+  margin: 0;
+}
 nav {
   height: 100vh;
   position: fixed;

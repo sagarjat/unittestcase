@@ -2,7 +2,7 @@
 <html >
 	<head>
 		<meta charset="UTF-8">
-		<title>Unit Tests</title>
+		<title>Boundaries</title>
 		<link rel="stylesheet" href="//cdn.materialdesignicons.com/2.7.94/css/materialdesignicons.min.css">
 		<link rel="stylesheet" type="text/css" href="https://unpkg.com/minibarjs@latest/dist/minibar.min.css">
 		<link rel="stylesheet" type="text/css" href="https://unpkg.com/rangeable@latest/dist/rangeable.min.css">
@@ -24,8 +24,9 @@
 		<main>
 			<section data-anchor="Page 1">
 				<div class="text">
-					<h1>Chapter No. 9 UNIT TESTS</h1>
+					<h1>Chapter No. 8 Boundaries</h1>
                     <img src="logo.png">
+					<p>--- Presenting by: Sagar Choudhary</p>
 					<div class="scroller">
 						<small>Scroll down or swipe up.</small>
 					</div>
@@ -33,84 +34,282 @@
 			</section>
 			<section data-anchor="Page 2">
 				<div class="text">
-					<h2>About TDD(Test Driven Development)</h2>
-                    <p class="about-text">
-                        When you first learn Test Driven Development, it sounds simple and easy. If you learned it in 1999, like I did, the rule was to simply write your unit tests first. Indeed, we called it Test First Design back then.
+					<h1> --- What is Boundaries  ---</h1>
+                    <p class="text-size">
+                        --- Boundaries is a place where component and systems is meet.
+						<br>
+						<br>
+						--- Boundaries is a place where 3rd party library or component is interact <br> with our system and 3rd party system is not directly in our control.
 
-                        I sat with Kent Beck in 1999 and paired with him in order to learn. What he taught me to do was certainly test first; but it involved a more fine-grained process than I’d ever seen before. He would write one line of a failing test, and then write the corresponding line of production code to make it pass. Sometimes it was slightly more than one line; but the scale he used was very close to line by line.
                     </p>
 					
+					<h1> --- What we want to accomplish from this chapter ---</h1>
+                    <p class="text-size">
+                        --- We learn in this chapter that how we can use 3rd party code in a clean way.
+                    </p>
 				</div>
 			</section>
 			<section data-anchor="Page 3">
-				<div class="text">
-					<h2>Initialize</h2>
-					<pre class="language-js">
-						<code>
-							new Pageable("#container");
-						</code>
-					</pre>
+				<div class="text-new">
+					<h1 style="text-align: center;"> --- Overview ---</h1>
+					<div>
+						<p class="text-size"> 
+							author of this chapter (James Grenning) present three ways to use 3rd party code in clean way. 
+						</p>
+						<ol class="list-style">
+							<li><b>Wrapper</b> </li>
+							<li><b>Boundaries Tests</b></li>
+							<li><b>Adapter</b></li>
+						</ol>
+					</div>
 				</div>
+				
+			</section>
 			</section>
 			<section data-anchor="Page 4">
 				<div class="text">
-					<h2>Customize</h2>
-					<pre class="language-js">
-						<code>
-							new Pageable("#container", {
-								animation: 500,
-								delay: 400,
-								orientation: "horizontal",
-								onScroll: function() {
-									// do something during scroll
-								},
-								// many more
-							});
-						</code>
-					</pre>
+					<h2>--- Wrapper ---</h2>
+					<article class="text-size">
+						<p>There is a natural tension between the provider of an interface and the user of an interface.
+							Providers of third-party packages and frameworks strive for broad applicability so they
+							can work in many environments and appeal to a wide audience. Users, on the other hand,
+							want an interface that is focused on their particular needs. This tension can cause problems
+							at the boundaries of our systems.
+						</p>
+						<p>
+							Let’s look at <b>java.util.Map </b >as an example. As you can see by below given list,
+							Map s have a very broad interface with plenty of capabilities. Certainly this power and ﬂexibility 
+							is useful, but it can also be a liability. For instance, our application might build up a
+							Map and pass it around. Our intention might be that none of the recipients of our Map delete
+							anything in the map. But right there at the top of the list is the clear() method. Any user of
+							the Map has the power to clear it.
+						</p>
+						<ul>
+							<li> clear() void – Map </li>
+							<li> containsKey(Object key) boolean – Map </li>
+							<li> containsValue(Object value) boolean – Map </li>
+							<li> entrySet() Set – Map </li>
+							<li> equals(Object o) boolean – Map </li>
+							<li> get(Object key) Object – Map </li>
+							<li> getClass() Class<? extends Object> – Object </li>
+							<li> hashCode() int – Map </li>
+							<li> isEmpty() boolean – Map </li>
+							<li> keySet() Set – Map </li>
+							<li> notify() void – Object </li>
+						</ul>
+						
+					</article>
 				</div>
 			</section>
 			<section data-anchor="Page 5">
 				<div class="text">
-					<h2>Control</h2>
-					<pre class="language-js"><code>const pages = new Pageable("#container");
-
-// scroll to previous page
-pages.prev();
-
-// scroll to next page
-pages.next();
-
-// scroll to defined page
-pages.scrollToPage(3);
-
-// scroll to defined anchor
-pages.scrollToAnchor("#page-3");
-
-// switch to horizontal scrolling
-pages.orientate("horizontal");</code></pre>
+					<article class="text-size">
+						<ul>
+							<li> notifyAll() void – Object </li>
+							<li> put(Object key, Object value) Object – Map </li>
+							<li> putAll(Map t) void – Map </li>
+							<li> remove(Object key) Object – Map </li>
+							<li> size() int – Map </li>
+							<li> toString() String – Object </li>
+							<li> values() Collection – Map </li>
+							<li> wait() void – Object </li>
+							<li> wait(long timeout) void – Object </li>
+							<li> wait(long timeout, int nanos) void – Object </li>
+						</ul>
+						<p>
+							Now we will take one another example and try to fix with wrapper.
+							<br>
+							<br>
+							If our application needs a Map of Sensor s, you might ﬁnd the sensors set up like this:
+						</p>
+						<p class="pre-back" >
+							<code></code>Map sensors = new HashMap();</code>
+						</p>
+						<p>Then, when some other part of the code needs to access the sensor, you see this code:</p>
+						<p class="pre-back" >
+							<code></code>Sensor s = (Sensor)sensors.get(sensorId );</code>
+						</p>
+					</article>
 				</div>
 			</section>
 			<section data-anchor="Page 6">
 				<div class="text">
-					<h2>Listen</h2>
-					<pre class="language-js"><code>const pages = new Pageable("#container");
+					<p class="text-size">We don’t just see it once, but over and over again throughout the code. The client of this
+						code carries the responsibility of getting an Object from the Map and casting it to the right
+						type. This works, but it’s not clean code. Also, this code does not tell its story as well as it
+						could. The readability of this code can be greatly improved by using generics, as shown
+						below:
+					</p>
+					<p class="pre-back" >
+						<code>
+							Map < Sensor> sensors = new HashMap< Sensor>();
+							<br>
+							...
+							<br>
+							Sensor s = sensors.get(sensorId );
+						</code>
+					</p>
+					<p>However, this doesn’t solve the problem that Map<Sensor> provides more capability than we
+						need or want.
+					</p>
+					<p class="text-size">
+						Passing an instance of Map<Sensor> liberally around the system means that there will
+							be a lot of places to ﬁx if the interface to Map ever changes. You might think such a change
+							to be unlikely, but remember that it changed when generics support was added in Java 5.
+							Indeed, we’ve seen systems that are inhibited from using generics because of the sheer
+							magnitude of changes needed to make up for the liberal use of Maps.
+					</p>
+					<p class="text-size">
+						A cleaner way to use Map might look like the following. No user of Sensors would care
+						one bit if generics were used or not. That choice has become (and always should be) an
+						implementation detail.
+					</p>
+				</div>
+			</section>
+			<section data-anchor="Page 7">
+				<div class="text">
+					<p class="pre-back">
 
-pages.on("init", data => {
-	// do something when the instance is ready
-});
+							public class Sensors {
+							<br>
+							&nbsp;&nbsp;&nbsp;&nbsp; private Map sensors = new HashMap();
+							<br>
+							&nbsp;&nbsp;&nbsp;&nbsp; public Sensor getById(String id) {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; return (Sensor) sensors.get(id);<br>
+								&nbsp;&nbsp;&nbsp;&nbsp; }
+								<br><br>
+								//snip
+								<br>
+							}
+					</p>
+					<p class="text-size">The interface at the boundary ( Map ) is hidden. It is able to evolve with very little impact on
+						the rest of the application. The use of generics is no longer a big issue because the casting
+						and type management is handled inside the Sensors class.
+						<br><br>
+						&nbsp;&nbsp;&nbsp;&nbsp;This interface is also tailored and constrained to meet the needs of the application. It
+						results in code that is easier to understand and harder to misuse. The Sensors class can
+						enforce design and business rules.
+						<br><br>
+						We are not suggesting that every use of Map be encapsulated in this form. Rather, we
+						are advising you not to pass Map s (or any other interface at a boundary) around your
+						system. If you use a boundary interface like Map , keep it inside the class, or close family
+						of classes, where it is used. Avoid returning it from, or accepting it as an argument to,
+						public APIs.
+					</p>
+				  
+					
+				
+				</div>
+			</section>
+			<section data-anchor="Page 8">
+				<div class="text">
+					<h1> --- Boundaries Tests  ---</h1>
+                    <p class="text-size">
+						Third-party code helps us get more functionality delivered in less time. Where do we start
+						when we want to utilize some third-party package? It’s not our job to test the third-party
+						code, but it may be in our best interest to write tests for the third-party code we use.
+						Suppose it is not clear how to use our third-party library. We might spend a day or two
+						(or more) reading the documentation and deciding how we are going to use it. Then we
+						might write our code to use the third-party code and see whether it does what we think. We
+						would not be surprised to ﬁnd ourselves bogged down in long debugging sessions trying to
+						ﬁgure out whether the bugs we are experiencing are in our code or theirs.
+						<br>
+						<br>
+						Learning the third-party code is hard. Integrating the third-party code is hard too.
+						Doing both at the same time is doubly hard. What if we took a different approach? Instead
+						of experimenting and trying out the new stuff in our production code, we could write some
+						tests to explore our understanding of the third-party code. Jim Newkirk calls such tests
+						learning tests.
+						<br>
+						<br>
+						In learning tests we call the third-party API, as we expect to use it in our application.
+						We’re essentially doing controlled experiments that check our understanding of that API.
+						The tests focus on what we want out of the API.
 
-pages.on("scroll.start", data => {
-	// do something when scrolling starts
-});
+						<br>
+						<br>
+						<br>
+						Next we will take one important example Learning log4j
+					</p>
+				</div>
+			</section>
+			<section data-anchor="Page 9">
+				<div class="text">
+					<h1> --- Learning log4j  ---</h1>
+                    <p class="text-size">
+						Let’s say we want to use the apache log4j package rather than our own custom-built logger. We download it and open the introductory documentation page. Without too much
+						reading we write our ﬁrst test case, expecting it to write “hello” to the console.
+					</p>
+					<p class="pre-back">
+						@Test><br>
+						public void testLogCreate() {<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;Logger logger = Logger.getLogger("MyLogger");<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;logger.info("hello");<br>
+						}
+					</p>
+					<p class="text-size" style="margin: 0;">
+						When we run it, the logger produces an error that tells us we need something called an
+						Appender . After a little more reading we ﬁnd that there is a ConsoleAppender . So we create a
+						ConsoleAppender and see whether we have unlocked the secrets of logging to the console.
+					</p>
+					<p class="pre-back">
+						@Test<br>
+						public void testLogAddAppender() {<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;Logger logger = Logger.getLogger("MyLogger");<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;ConsoleAppender appender = new ConsoleAppender();<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;logger.addAppender(appender);<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;logger.info("hello");<br>
+						}
+					</p>
+				</div>
+			</section>
+			<section data-anchor="Page 10">
+				<div class="text">
+                    <p class="text-size">
+						This time we ﬁnd that the Appender has no output stream. Odd—it seems logical that it’d
+						have one. After a little help from Google, we try the following:	
+					</p>
+					<p class="pre-back" style="margin: 0;">
+						public class LogTest {<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;private Logger logger;<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;@Before<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;public void initialize() {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;logger = Logger.getLogger("logger");<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;logger.removeAllAppenders();<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logger.getRootLogger().removeAllAppenders();<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;@Test<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;public void basicLogger() {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BasicConfigurator.configure();<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;logger.info("basicLogger");<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;@Test<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;public void addAppenderWithStream() {<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;logger.addAppender(new ConsoleAppender(<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new PatternLayout("%p %t %m%n"),<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ConsoleAppender.SYSTEM_OUT));<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;logger.info("addAppenderWithStream");<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;@Test<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;public void addAppenderWithoutStream() {<br>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;logger.addAppender(new ConsoleAppender(<br>
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new PatternLayout("%p %t %m%n")));<br>
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;logger.info("addAppenderWithoutStream");<br>
+											&nbsp;&nbsp;&nbsp;&nbsp;}
+						}
 
-pages.on("scroll", data => {
-	// do something during scroll
-});
-
-pages.on("scroll.end", data => {
-	// do something when scrolling ends
-});</code></pre>
+					</p>
+				</div>
+			</section>
+			<section data-anchor="Page 11">
+				<div class="text">
+                    <p class="text-size">
+						Now we know how to get a simple console logger initialized, and we can encapsulate
+						that knowledge into our own logger class so that the rest of our application is isolated from
+						the log4j boundary interface
+					</p>
+					<h1> --- Thankyou for your listing  ---</h1>
+					<p class="text-size"> --- By: Sagar Choudhary </p>
 				</div>
 			</section>
 		</main>
